@@ -1,1 +1,1 @@
-# slider
+# slider - project for training course
