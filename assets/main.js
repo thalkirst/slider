@@ -5,8 +5,6 @@ import urls from './imagedata.js'
 const container = document.querySelector('.slidercontainer');
 let slide_index;
 
-// adding all images with captions to DOM //
-
 function addImages() {
     let captions = [];
     let links = [];
@@ -16,7 +14,7 @@ function addImages() {
         links.push(value);
     }
     for (let i = 0; i < links.length; i++) {
-        //add images//
+        //add images and captions//
         let imagediv = document.createElement('div');
         imagediv.classList.add('showSlide', 'fade');
         container.appendChild(imagediv);
@@ -59,8 +57,8 @@ function addElements() {
 };
 
 function updateCounter() {
-    let slides = document.querySelectorAll('.showSlide')
-    let counter = document.querySelector('.slidercounter')
+    const slides = document.querySelectorAll('.showSlide')
+    const counter = document.querySelector('.slidercounter')
     counter.textContent = `${slide_index} / ${slides.length}`;
 };
 
@@ -71,8 +69,8 @@ function jumptoSlide(ev) {
 }
 
 function displaySlides(n) {
-    let slides = document.querySelectorAll('.showSlide');
-    let buttons = document.querySelectorAll('.circle');
+    const slides = document.querySelectorAll('.showSlide');
+    const buttons = document.querySelectorAll('.circle');
     if (n > slides.length) { slide_index = 1 }
     if (n < 1) { slide_index = slides.length }
     for (let i = 0; i < slides.length; i++) {
@@ -84,8 +82,18 @@ function displaySlides(n) {
     updateCounter();
 }
 
+function startSlideShow(delay = 3000, height = 500) {
+    const slider = document.querySelector('.slider');
+    slider.style.height = `${height}px`;
+    displaySlides(slide_index);
+    setInterval(() => {
+        slide_index++;
+        displaySlides(slide_index);
+    }, delay);
+}
+
 addImages();
 addElements();
-displaySlides(slide_index);
 
-
+//parameters: 1. delay between changing the pictures in ms (default=3000) 2. height of the slider in pixel (default:500 px) //
+startSlideShow(3000, 500);
